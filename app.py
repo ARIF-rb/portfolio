@@ -85,7 +85,7 @@ def home_section():
 
     col1, col2 = st.columns([1, 2])  # Image on the left (1/3 of the width), text on the right (2/3 of the width)
     with col1:
-        st.image("assets/imgs/man.png", width=200)  # Resize the image for better fit
+        st.image("man.png", width=200)  # Resize the image for better fit
 
     with col2:
         st.markdown("""
