@@ -248,8 +248,8 @@ def footer_section():
     <footer>
         <p>Follow me on:</p>
         <div class="social-links">
-            <a href="#">LinkedIn</a>
-            <a href="#">GitHub</a>
+            <a href="https://www.linkedin.com/in/arifrubbani/">LinkedIn</a>
+            <a href="https://github.com/ARIF-rb">GitHub</a>
             <a href="#">Twitter</a>
         </div>
     </footer>
