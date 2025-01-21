@@ -1,92 +1,34 @@
+
 import streamlit as st
 from PIL import Image
-
 
 # Set page configuration
 st.set_page_config(page_title="Muhammad Arif Rubbani Portfolio", layout="wide", initial_sidebar_state="collapsed")
 
-# Add custom CSS for the services section
-st.markdown("""
-    <style>
-        .service-btn {
-            display: inline-block;
-            padding: 20px;
-            margin: 10px 10px;
-            background-color: #1ecdf8;
-            color: white;
-            border-radius: 8px;
-            text-align: center;
-            cursor: pointer;
-            width: 200px;
-            font-size: 1.1rem;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease-in-out;
-        }
 
-        .service-btn:hover {
-            background-color: #1497b2;
-        }
 
-        .service-btn-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-around;
-        }
+# Initialize session state for navigation and details
+if "selected_service" not in st.session_state:
+    st.session_state.selected_service = None
+if "selected_project" not in st.session_state:
+    st.session_state.selected_project = None
 
-        .service-description {
-            background-color: #1ecdf8;
-            color: black;
-            padding: 20px;
-            border-radius: 8px;
-            margin-top: 20px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-    </style>
-""", unsafe_allow_html=True)
+# Navigate back to the main Services section
+def back_to_services():
+    st.session_state.selected_service = None
 
-# Services Section
-def service_section():
-    st.markdown('<h2 class="section-title">What I Do</h2>', unsafe_allow_html=True)
-    st.write("Click on any service to see the description:")
-
-    # Service List and Descriptions
-    services = {
-        "📊 Data Analysis and Visualization": "Perform data cleaning, preprocessing, and analysis to uncover actionable insights. Create visually compelling dashboards and reports using tools like Python, Matplotlib, Seaborn, and Tableau.",
-        "🤖 Machine Learning Model Development": "Build predictive and classification models using Scikit-learn, TensorFlow, and Keras. Expertise in NLP, Deep Learning, and model optimization for better performance.",
-        "🔗 ETL and Data Pipeline Development": "Design and implement robust ETL pipelines using PySpark, KNIME, and Pentaho. Automate data workflows to ensure smooth data integration and management.",
-        "🗄️ Database Management and SQL Development": "Optimize database queries for performance and maintain data integrity. Develop and manage SQL databases, including complex queries and stored procedures.",
-        "💻 Custom Software and Application Development": "Develop scalable and efficient software applications using Python, Django, and Java. Strong understanding of OOP principles and design patterns for software architecture.",
-        "👨‍🏫 Freelance Python Tutoring and Programming Assistance": "Teach Python programming at all levels, from beginner to advanced, including DSA and OOP concepts. Provide one-on-one and group training tailored to specific learning goals.",
-        "📈 Business Intelligence and Data Dashboard Creation": "Design interactive dashboards for real-time decision-making using tools like Power BI and Tableau. Integrate multiple data sources for comprehensive business reporting.",
-        "🧑‍💻 Project Consultation and Guidance": "Assist in building custom solutions like Diet Plan Recommendation Engines or Movie Advisory Systems. Offer mentorship and support for capstone and academic projects in data science.",
-        "🌐 Web Scraping and Data Collection Services": "Scrape large-scale data from websites and APIs for business and research needs. Utilize Python libraries like BeautifulSoup and Selenium for efficient data extraction.",
-        "📑 Professional Documentation and Report Writing": "Deliver detailed and professional technical documentation and business reports. Support with academic writing in the field of data science and analytics."
-    }
-
-    # Create a container for the service buttons and the description
-    col1, col2 = st.columns([2, 3])
-
-    with col1:
-        # Create buttons for each service
-        for service in services.keys():
-            if st.button(service):
-                st.session_state.service_description = services[service]
-
-    with col2:
-        # Display the description of the selected service
-        if 'service_description' in st.session_state:
-            st.markdown(f"<div class='service-description'>{st.session_state.service_description}</div>", unsafe_allow_html=True)
-
+# Navigate back to the main Projects section
+def back_to_projects():
+    st.session_state.selected_project = None
 
 # Home Section
 def home_section():
     st.markdown("<h1 class='header-title'>HI! I am Muhammad Arif Rubbani</h1>", unsafe_allow_html=True)
     st.markdown("<h2 class='header-subtitle'>Python Programmer & Data Analyst</h2>", unsafe_allow_html=True)
 
-    col1, col2 = st.columns([1, 2])  # Image on the left (1/3 of the width), text on the right (2/3 of the width)
+    col1, col2 = st.columns([1, 2])
     with col1:
-        st.image("image.png", width=200)  # Resize the image for better fit
-
+        st.image("man.png", width=200)
     with col2:
         st.markdown("""
             <div class="image-description">
@@ -101,8 +43,137 @@ def home_section():
             </div>
         """, unsafe_allow_html=True)
 
-    st.button("Visit My Works", on_click=lambda: st.write("Redirect to Projects"))
 
+# Services Section
+def services_section():
+    if st.session_state.selected_service is None:
+        st.markdown('<h2 class="section-title">What I Do</h2>', unsafe_allow_html=True)
+        services = [
+            {
+                "icon": "📊",
+                "title": "Data Analysis and Visualization",
+                "description": "Perform data cleaning, preprocessing, and analysis to uncover actionable insights.",
+                "details": "\n- Data Cleaning and Preprocessing\n- Advanced Statistical Analysis\n- Interactive Dashboards with Matplotlib and Seaborn\n- Tailored Insights for Business Decisions"
+            },
+            {
+                "icon": "🤖",
+                "title": "Machine Learning Model Development",
+                "description": "Build predictive and classification models using Scikit-learn and TensorFlow.",
+                "details": "\n- Supervised and Unsupervised Learning\n- Model Optimization and Evaluation\n- Expertise in NLP and Deep Learning\n- Scalable Solutions for Real-World Problems"
+            },
+            {
+                "icon": "🔗",
+                "title": "ETL and Data Pipeline Development",
+                "description": "Design and implement robust ETL pipelines using PySpark and KNIME.",
+                "details": "\n- Efficient Data Extraction and Transformation\n- Seamless Integration with APIs\n- Automated Data Workflows\n- Data Consistency and Quality Assurance"
+            },
+            {
+                "icon": "🌐",
+                "title": "Web Development and Automation",
+                "description": "Create responsive web applications and automate repetitive tasks.",
+                "details": "\n- Full-Stack Web Development\n- Automation Scripts for Efficiency\n- Integration with APIs\n- User-Friendly Interfaces"
+            },
+            {
+                "icon": "☁️",
+                "title": "Cloud Computing and Deployment",
+                "description": "Deploy scalable applications on cloud platforms like AWS and Azure.",
+                "details": "\n- Cloud Resource Management\n- CI/CD Pipeline Setup\n- Scalable Deployment Solutions\n- Cost Optimization Techniques"
+            },
+            {
+                "icon": "🔒",
+                "title": "Cybersecurity and Data Protection",
+                "description": "Ensure the security and integrity of systems and data.",
+                "details": "\n- Vulnerability Assessments\n- Encryption and Secure Data Storage\n- Incident Response Plans\n- Compliance with Security Standards"
+            },
+        ]
+
+        col1, col2, col3 = st.columns(3, gap="large")
+        for i, service in enumerate(services):
+            with [col1, col2, col3][i % 3]:
+                st.markdown(f"<h3>{service['icon']} {service['title']}</h3>", unsafe_allow_html=True)
+                st.write(service["description"])
+                if st.button(f"View Details ", key=f"service_{i}"):
+                    st.session_state.selected_service = service
+                    st.rerun()
+                st.markdown("<br>", unsafe_allow_html=True)  # Add spacing between services
+    else:
+        service = st.session_state.selected_service
+        st.markdown(f"<h2 class='section-title'>{service['icon']} {service['title']}</h2>", unsafe_allow_html=True)
+        st.markdown(service['details'])
+        if st.button("Back to Services"):
+            back_to_services()
+            st.rerun()
+            
+# Projects Section
+def projects_section():
+    if st.session_state.selected_project is None:
+        st.markdown('<h2 class="section-title">Projects</h2>', unsafe_allow_html=True)
+        projects = [
+            {
+                "title": "Diet Plan Recommendation Engine",
+                "description": "A recommendation engine for personalized diet plans.",
+                "technologies": "Python, Machine Learning",
+                "outcome": "Provided users with tailored diet plans based on preferences.",
+                "image": "diet_plan.png",
+                "details": "This project uses machine learning algorithms to analyze user preferences and recommend customized diet plans for better health and fitness.",
+                "download_link": "https://example.com/diet_plan_download",
+            },
+            {
+                "title": "Movie Advisor",
+                "description": "A recommendation system based on user's likes and dislikes.",
+                "technologies": "Python, Recommendation Systems",
+                "outcome": "Enhanced user experience by suggesting movies tailored to preferences.",
+                "image": "movie_advisor.jpg",
+                "details": "This project analyzes user preferences and viewing history to suggest movies, utilizing collaborative filtering techniques.",
+                "download_link": "https://example.com/movie_advisor_download",
+            },
+            {
+                "title": "Sales Performance Dashboard",
+                "description": "A dashboard to track sales performance.",
+                "technologies": "Tableau, Excel",
+                "outcome": "Improved sales insights and operational efficiency.",
+                "image": "sales_dashboard.png",
+                "details": "This dashboard provides real-time insights into sales trends, revenue streams, and performance metrics, enabling better decision-making.",
+                "download_link": "https://example.com/sales_dashboard_download",
+            },
+            {
+                "title": "Image Classification Model",
+                "description": "A model for classifying images using deep learning.",
+                "technologies": "Python, TensorFlow, Keras",
+                "outcome": "Accurately classified images into predefined categories.",
+                "image": "image_classification.png",
+                "details": "This project leverages deep learning techniques to classify images into various categories with high accuracy, using convolutional neural networks (CNNs).",
+                "download_link": "https://example.com/image_classification_download",
+            },
+        ]
+
+
+        for i in range(0, len(projects), 2):
+            col1, col2 = st.columns(2)
+            for j, col in enumerate([col1, col2]):
+                if i + j < len(projects):
+                    project = projects[i + j]
+                    with col:
+                        st.image(project["image"],width=200)
+                        st.subheader(project["title"])
+                        st.write(project["description"])
+                        if st.button("View Details", key=f"project_{i+j}"):
+                            st.session_state.selected_project = project
+                            st.rerun()
+    else:
+        project = st.session_state.selected_project
+        st.markdown(f"<h2 class='section-title'>{project['title']}</h2>", unsafe_allow_html=True)
+        st.image(project["image"], width=200)
+        st.write(f"**Technologies Used:** {project['technologies']}")
+        st.write(f"**Outcome:** {project['outcome']}")
+        st.write(project['details'])
+        if "download_link" in project:
+            st.markdown(f"[Download Project Files]({project['download_link']})", unsafe_allow_html=True)
+        if "live_demo" in project:
+            st.markdown(project['live_demo'], unsafe_allow_html=True)
+        if st.button("Back to Projects"):
+            back_to_projects()
+            st.rerun()
 
 # About Section
 def about_section():
@@ -165,31 +236,7 @@ def skills_section():
         - **Other Skills:** Microsoft Office, strong analytical and problem-solving skills, good communication skills (written and oral)
     """)
 
-# Projects Section
-def projects_section():
-    st.markdown('<h2 class="section-title">Projects</h2>', unsafe_allow_html=True)
-    st.write("Here are some of the projects I have worked on:")
 
-    col1, col2 = st.columns(2)
-    with col1:
-        st.markdown("📊 **Diet Plan Recommendation Engine**")
-        st.write("A recommendation engine for personalized diet plans based on user preferences.")
-
-    with col2:
-        st.markdown("🎥 **Movie Advisor**")
-        st.write("A recommendation system based on user's likes, dislikes, and most watched movies.")
-    
-    # New Projects with Emojis
-    st.markdown("<h3 class='section-subtitle'>More Projects</h3>", unsafe_allow_html=True)
-
-    col1, col2 = st.columns(2)
-    with col1:
-        st.markdown("📊 **Sales Performance Dashboard**")
-        st.write("A dashboard to track sales performance, key metrics, and trends for better decision-making.")
-    
-    with col2:
-        st.markdown("🖼️ **Image Classification Model**")
-        st.write("An image classification model built using deep learning techniques for categorizing images.")
 
 # Pricing Section
 def pricing_section():
@@ -248,16 +295,16 @@ def footer_section():
     <footer>
         <p>Follow me on:</p>
         <div class="social-links">
-            <a href="https://www.linkedin.com/in/arifrubbani/">LinkedIn</a>
-            <a href="https://github.com/ARIF-rb">GitHub</a>
+            <a href="#">LinkedIn</a>
+            <a href="#">GitHub</a>
             <a href="#">Twitter</a>
         </div>
     </footer>
     """, unsafe_allow_html=True)
 
-# Tab-like Navigation with st.tabs
-tabs = st.tabs(["Home", "About", "Projects", "Skills", "Services", "Pricing", "Contact"])
 
+# Tab-like Navigation
+tabs = st.tabs(["Home", "About", "Projects", "Skills", "Services", "Pricing", "Contact"])
 with tabs[0]:
     home_section()
 with tabs[1]:
@@ -267,7 +314,7 @@ with tabs[2]:
 with tabs[3]:
     skills_section()
 with tabs[4]:
-    service_section()
+    services_section()
 with tabs[5]:
     pricing_section()
 with tabs[6]:
