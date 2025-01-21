@@ -28,7 +28,7 @@ def home_section():
 
     col1, col2 = st.columns([1, 2])
     with col1:
-        st.image("man.png", width=200)
+        st.image("image.png", width=200)
     with col2:
         st.markdown("""
             <div class="image-description">
@@ -289,15 +289,20 @@ def contact_section():
             else:
                 st.error("Please fill in all fields before submitting.")
 
-# Footer Section
 def footer_section():
     st.markdown("""
-    <footer>
+    <footer style="text-align: center; margin-top: 50px;">
         <p>Follow me on:</p>
-        <div class="social-links">
-            <a href="#">LinkedIn</a>
-            <a href="#">GitHub</a>
-            <a href="#">Twitter</a>
+        <div style="display: flex; justify-content: center; gap: 20px; margin-top: 10px;">
+            <a href="https://www.linkedin.com/in/arifrubbani" target="_blank">
+                <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="LinkedIn" style="width: 30px; height: 30px;">
+            </a>
+            <a href="https://github.com/arifrubbani" target="_blank">
+                <img src="https://cdn-icons-png.flaticon.com/512/25/25231.png" alt="GitHub" style="width: 30px; height: 30px;">
+            </a>
+            <a href="https://twitter.com/arifrubbani" target="_blank">
+                <img src="https://cdn-icons-png.flaticon.com/512/733/733579.png" alt="Twitter" style="width: 30px; height: 30px;">
+            </a>
         </div>
     </footer>
     """, unsafe_allow_html=True)
